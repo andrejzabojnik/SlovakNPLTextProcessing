@@ -107,33 +107,9 @@ public class TextProcesses {
     }
 
 
-    public String stopWord(String text){
-        List<String> stopWords = loadStopWords("src/main/resources/stopwords_file.txt");
-        String[] tokenizeWord = tokenize(text);
-        for(String word: tokenizeWord){
-            if(stopWords.contains(word)){
-                tokenizeWord
 
 
-            }
 
-        }
-
-    }
-
-
-    public List<String> loadStopWords(String fileName) {
-        List<String> stopWords = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                stopWords.add(line.trim());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return stopWords;
-    }
 
 }
 
