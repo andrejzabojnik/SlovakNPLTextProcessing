@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Text_Managment:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Text_Managment_jar</output-path>
+    <root id="archive" name="Text_Managment.jar">
+      <element id="module-output" name="Text_Managment" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/beust/jcommander/1.82/jcommander-1.82.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/opennlp/opennlp-tools/1.9.3/opennlp-tools-1.9.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

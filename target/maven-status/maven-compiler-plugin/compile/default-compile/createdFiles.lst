@@ -1,0 +1,10 @@
+Main.class
+sk\textprocessor\arguments\ArgumentParser.class
+sk\textprocessor\exceptions\UnknownParametersException.class
+sk\textprocessor\input\InputReader.class
+sk\textprocessor\processing\TextProcesses.class
+sk\textprocessor\exceptions\InvalidInputFileException.class
+sk\textprocessor\exceptions\InvalidParametersCombinationException.class
+sk\textprocessor\output\FileHandler.class
+sk\textprocessor\processing\Abbreviation.class
+sk\textprocessor\exceptions\InvalidOutputFileException.class
