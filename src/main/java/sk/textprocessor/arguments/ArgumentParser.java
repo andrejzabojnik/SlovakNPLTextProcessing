@@ -5,6 +5,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
 import org.w3c.dom.Text;
 import sk.textprocessor.exceptions.InvalidParametersCombinationException;
+import sk.textprocessor.exceptions.InvalidTextProcessingTypeException;
 import sk.textprocessor.exceptions.UnknownParametersException;
 import sk.textprocessor.processing.TextProcesses;
 
@@ -12,27 +13,33 @@ public class ArgumentParser {
     TextProcesses TextProcesses = new TextProcesses();
 
 //    parameters for TextProcesses
+
+    @Parameter(names = "-lemma", description = "Lematize text")
+    private static boolean lemmatize = false;
+
+    @Parameter(names = "-analyze", description = "Morphological analyze")
+    private static boolean analyze = false;
     @Parameter(names = "-token", description = "Tokenize text")
-    private boolean tokenize = false;
+    private static boolean tokenize = false;
 
     @Parameter(names = "-extsents", description = "Extract sentences")
-    private boolean extractSentences = false;
+    private static boolean extractSentences = false;
 
     @Parameter(names = "-lowercase", description = "lowercase")
-    private boolean lowercasing = false;
+    private static boolean lowercasing = false;
 
 //    file parameters
     @Parameter(names = "-input", description = "Input file")
-    private String inputFile = "";
+    private static String inputFile = "";
 
     @Parameter(names = "-print", description = "Print text")
-    private boolean printText = false;
+    private static boolean printText = false;
 
     @Parameter(names = "-change", description = "Change file")
-    private boolean changeFile = false;
+    private static boolean changeFile = false;
 
     @Parameter(names = "-newFile", description = "Tokenize text")
-    private String newFile = "";
+    private static String newFile = "";
 
 //  Jcommander instance
     public ArgumentParser(String[] args) throws InvalidParametersCombinationException,UnknownParametersException {
@@ -54,7 +61,7 @@ public class ArgumentParser {
     }
 
     public int checkNumberOfParameters(){
-        boolean[] options = {tokenize, extractSentences, lowercasing};
+        boolean[] options = {tokenize, extractSentences,analyze,lemmatize};
         int count = 0;
         for (int i = 0; i < options.length; i++) {
             if (options[i]) {
@@ -65,7 +72,28 @@ public class ArgumentParser {
 
     }
 
-    public String[]  processTextArgument(String text){
+    public <T> T processTextArgument(String text) throws InvalidTextProcessingTypeException {
+        try{
+            if (this.isTokenize()) {
+                return (T) TextProcesses.tokenize(text);
+            } else if (this.isExtractSentences()) {
+                return (T) TextProcesses.extractSentences(text);
+            } else if (this.isAnalyze()) {
+                return (T) TextProcesses.analyze(text);
+            } else if (this.isLemmatize()) {
+                return (T) TextProcesses.lemmatize(text);
+
+            } else {
+                return null;
+            }
+        }
+
+        catch (Exception e) {
+            throw new InvalidTextProcessingTypeException("Chyba: Funkcia processTextArguments nemože spracovať dany process");
+        }
+    }
+
+    public String[]  TextArgument(String text){
         if(this.isTokenize()) {
             return TextProcesses.tokenize(text);
         }else if(this.isExtractSentences()){
@@ -76,23 +104,30 @@ public class ArgumentParser {
     }
 
 //  functions
-    public String getNewFileName() { return newFile;}
-    public boolean isTokenize() {
+    public static String getNewFileName() { return newFile;}
+
+    public static boolean isLemmatize() {
+        return lemmatize;
+    }
+    public static boolean isAnalyze() {
+        return analyze;
+    }
+    public static boolean isTokenize() {
         return tokenize;
     }
-    public boolean isExtractSentences() {
+    public static boolean isExtractSentences() {
         return extractSentences;
     }
-    public boolean isChangeFile() {
+    public static boolean isChangeFile() {
         return changeFile;
     }
-    public String getInputFile() {
+    public static String getInputFile() {
         return inputFile;
     }
-    public boolean isPrintText() {
+    public static boolean isPrintText() {
         return printText;
     }
-    public boolean isLowerCasing() {
+    public static boolean isLowerCasing() {
         return lowercasing;
     }
 

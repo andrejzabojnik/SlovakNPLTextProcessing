@@ -27,6 +27,12 @@
             <version>1.82</version>
         </dependency>
 
+        <dependency>
+            <groupId>cz.cuni.mff.ufal</groupId>
+            <artifactId>interset</artifactId>
+            <version>1.8.1</version>
+        </dependency>
+
 
 
 

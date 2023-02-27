@@ -1,14 +1,15 @@
+
 import cz.cuni.mff.ufal.morphodita.Morpho;
 import org.w3c.dom.Text;
 import sk.textprocessor.arguments.ArgumentParser;
-import sk.textprocessor.exceptions.InvalidInputFileException;
-import sk.textprocessor.exceptions.InvalidOutputFileException;
-import sk.textprocessor.exceptions.InvalidParametersCombinationException;
-import sk.textprocessor.exceptions.UnknownParametersException;
+import sk.textprocessor.exceptions.*;
 
 import sk.textprocessor.input.InputReader;
 import sk.textprocessor.output.FileHandler;
 import sk.textprocessor.processing.TextProcesses;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -33,15 +34,27 @@ public class Main {
 
             }
             if(ArgumentParser.isPrintText()){
-                System.out.println(ArgumentParser.processTextArgument(inputText));
+                Object result = ArgumentParser.processTextArgument(inputText);
+                System.out.println(result);
+                if (result instanceof String[]) {
+                    String[] output = (String[]) result;
+                    for(String i : output){
+                        System.out.println(i);
+                    }
+
+                } else if (result instanceof LinkedHashMap) {
+                    LinkedHashMap<String, String> output = (LinkedHashMap<String, String>) result;
+                    for (Map.Entry<String, String> entry : output.entrySet()) {
+                        System.out.println(entry.getKey() + ": " + entry.getValue());
+                    }
+                }
             }
 
 //
-        } catch (UnknownParametersException | InvalidInputFileException | InvalidParametersCombinationException | InvalidOutputFileException e) {
+        } catch (UnknownParametersException | InvalidInputFileException | InvalidParametersCombinationException | InvalidOutputFileException | RuntimeException  |
+                 InvalidTextProcessingTypeException e) {
             System.err.println(e.getMessage());
         }
-
-
 
 
     }
